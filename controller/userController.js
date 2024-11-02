@@ -13,7 +13,7 @@ exports.create = async (req, res) =>{
     try{
         const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairo, cep) VALUES ($1, $2, $3, $4) RETURNING *',
        [nome_pessoa, rua, bairro, formatarCep(cep)]);
-       res.status(201).json(result.rows(0));
+       res.status(201).json(result.rows);
 
     } catch (error){
         console.log(error);
@@ -24,7 +24,7 @@ exports.create = async (req, res) =>{
 exports.getAll = async (req, res) =>{
     try{
         const result = await pool.query('SELECT * FROM endereco');
-       res.status(201).json(result.rows(0));
+       res.status(201).json(result.rows);
 
     } catch (error){
         console.log(error);
