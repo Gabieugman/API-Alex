@@ -47,7 +47,7 @@ exports.getOne = async (req, res) =>{
     }
 
     
-exports.updateOne = async (req, res) =>{
+exports.update = async (req, res) =>{
     const {id_pessoa} = req.params
     const {nome_pessoa, rua, bairro, cep} = req.body;
     try{
@@ -62,7 +62,7 @@ exports.updateOne = async (req, res) =>{
     }
 
     
-exports.deleteOne = async (req, res) =>{
+exports.delete = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
