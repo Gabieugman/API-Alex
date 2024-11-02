@@ -10,6 +10,6 @@ app.use('/api/enderecos', useRotes);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, ()=>{
     console.log(`Servidor rodando em ${PORT}`);
-})
+});
 
 
