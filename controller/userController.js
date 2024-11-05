@@ -51,7 +51,7 @@ exports.update = async (req, res) =>{
     const {id_pessoa} = req.params
     const {nome_pessoa, rua, bairro, cep} = req.body;
     try{
-        const result = await pool.query('UPDATE endereco nome_pessoa = $1, rua = $2, bairro = $3, cep = $4', [id_pessoa, nome_pessoa, rua, bairro, cep]);
+        const result = await pool.query('UPDATE endereco nome_pessoa = $1, rua = $2, bairro = $3, cep = $4', [nome_pessoa, rua, bairro, cep]);
         if(result.rows.length === 0)
        res.status(400).json({Message: 'Sem dados do endereço'});
 
