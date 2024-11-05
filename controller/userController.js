@@ -37,6 +37,7 @@ exports.getOne = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('SELECT * FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
+        res.status(201).json(result.rows[0]);
         if(result.rows.length === 0)
        res.status(400).json({Message: 'Sem dados do endereço'});
 
