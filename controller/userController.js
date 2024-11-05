@@ -68,7 +68,7 @@ exports.delete = async (req, res) =>{
     try{
         const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
         if(result.rows.length === 0)
-       res.status(400).json({Message: 'Sem dados do endereço'});
+       res.status(201).json({Message: 'DELETADO'});
 
     } catch (error){
         console.log(error);
