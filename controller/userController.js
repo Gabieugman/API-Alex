@@ -4,7 +4,7 @@ exports.create = async (req, res) =>{
     const {nome_pessoa, rua, bairro, cep} = req.body;
 
     try{
-        const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairo, cep) VALUES ($1, $2, $3, $4) RETURNING *',
+        const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairro, cep) VALUES ($1, $2, $3, $4) RETURNING *',
        [nome_pessoa, rua, bairro, cep]);
        res.status(201).json(result.rows);
 
