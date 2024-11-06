@@ -27,11 +27,11 @@ exports.getAll = async (req, res) =>{
 
     
 exports.getOne = async (req, res) =>{
-    const {id_pessoa} = req.params
+    const {id_pessoa} = req.query
     try{
-        const result = await pool.query('SELECT * FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
+        const result = await pool.query(`SELECT * FROM endereco WHERE id_pessoa = ${id_pessoa}`);
         res.status(201).json(result.rows)
-        
+
     } catch (error){
         console.log(error);
         res.status(500).json({Message: 'Erro! Tente novamente'});
