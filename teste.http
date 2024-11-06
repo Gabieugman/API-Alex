@@ -1,53 +1,21 @@
-POST http://localhost:8080/
+POST http://localhost:8080/api/enderecos/criar
 Content-Type: application/json
 
-[
-    {
-        "nome": "Alice Silva",
-        "rua": "Rua das Flores",
-        "bairro": "Jardim Primavera",
-        "cep": "12345-678"
-    },
-    {
-        "nome": "Bruno Costa",
-        "rua": "Avenida Central",
-        "bairro": "Centro",
-        "cep": "23456-789"
-    },
-    {
-        "nome": "Carla Pereira",
-        "rua": "Rua do Sol",
-        "bairro": "Praia Azul",
-        "cep": "34567-890"
-    },
-    {
-        "nome": "Daniel Oliveira",
-        "rua": "Rua da Paz",
-        "bairro": "Vila Nova",
-        "cep": "45678-901"
-    },
-    {
-        "nome": "Eduarda Santos",
-        "rua": "Rua da Liberdade",
-        "bairro": "Bairro Alto",
-        "cep": "56789-012"
-    },
-    {
-        "nome": "Fernando Lima",
-        "rua": "Avenida Brasil",
-        "bairro": "São José",
-        "cep": "67890-123"
-    },
-    {
-        "nome": "Gabriela Martins",
-        "rua": "Rua do Comércio",
-        "bairro": "Setor Sul",
-        "cep": "78901-234"
-    },
-    {
-        "nome": "Henrique Ferreira",
-        "rua": "Rua da Alegria",
-        "bairro": "Cidade Verde",
-        "cep": "89012-345"
-    }
-]
+###
+
+GET http://localhost:8080/api/enderecos/selecionarTodos
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/api/enderecos/buscarUmaPessoa/1
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/api/enderecos/atualizar/:id_pessoa
+Content-Type: application/json
+
+###
+DELETE http://localhost:8080/api/enderecos/deletar/:id_pessoa
+Content-Type: application/json

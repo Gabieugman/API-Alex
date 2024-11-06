@@ -30,9 +30,8 @@ exports.getOne = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('SELECT * FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
-        if(result.rows.length === 0)
-       res.status(400).json({Message: 'Sem dados do endereço'});
-
+        res.status(201).json(result.rows)
+        
     } catch (error){
         console.log(error);
         res.status(500).json({Message: 'Erro! Tente novamente'});
