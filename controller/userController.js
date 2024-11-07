@@ -1,11 +1,18 @@
 const pool = require('../config/db');
 
+formataCEP = (cep) => {
+    if(cep.length === 8){
+        return cep.slice(0, 5) + '-' + cep.slice(5);
+    }
+    return cep;
+}
+
 exports.create = async (req, res) =>{
     const {nome_pessoa, rua, bairro, cep} = req.body;
 
     try{
         const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairro, cep) VALUES ($1, $2, $3, $4) RETURNING *',
-       [nome_pessoa, rua, bairro, cep]);
+       [nome_pessoa, rua, bairro, formataCEP(cep)]);
        res.status(201).json(result.rows);
 
     } catch (error){
@@ -43,21 +50,21 @@ exports.getOne = async (req, res) =>{
     }
 
     
-exports.update = async (req, res) =>{
-    const {id_pessoa} = req.params;
-    const {campo, valor} = req.body;
-    console.log(req.body);
-
-    try{
-        const result = await pool.query(`UPDATE endereco SET ${campo} = $1 WHERE id = $2`, 
-            [valor, id_pessoa]
-        ) 
-        res.status(201).json(result.rows[0])
+    exports.update = async (req, res) => {           // Rota para atualizar os dados de um endereço 👍
+        const {id_usuario} = req.params
+        const {campo, valor} = req.body
+        console.log(req.body)
     
-    } catch (error){
-        console.log(error);
-        res.status(500).json({Message: "Esta pessoa n existe"})
-    }
+        try {
+            const result = await pool.query(
+                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id = $2`,
+                [valor, id_usuario]
+            )
+            res.status(201).json(result.rows[0])
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({Message: "Impossivel ler endereco"})
+        }
     }
 
     
