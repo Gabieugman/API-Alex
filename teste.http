@@ -1,3 +1,21 @@
-PUT http://localhost:8080/selecionarUm/1
+POST http://localhost:8080/api/enderecos/criar
 Content-Type: application/json
 
+###
+
+GET http://localhost:8080/api/enderecos/selecionarTodos
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/api/enderecos/buscarUmaPessoa/1
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/api/enderecos/atualizar/:id_pessoa
+Content-Type: application/json
+
+###
+DELETE http://localhost:8080/api/enderecos/deletar/:id_pessoa
+Content-Type: application/json

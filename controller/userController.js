@@ -4,8 +4,8 @@ exports.create = async (req, res) =>{
     const {nome_pessoa, rua, bairro, cep} = req.body;
 
     try{
-        const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairo, cep) VALUES ($1, $2, $3, $4) RETURNING *',
-       [nome_pessoa, rua, bairro, formatarCep(cep)]);
+        const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairro, cep) VALUES ($1, $2, $3, $4) RETURNING *',
+       [nome_pessoa, rua, bairro, cep]);
        res.status(201).json(result.rows);
 
     } catch (error){
@@ -27,11 +27,8 @@ exports.getAll = async (req, res) =>{
 
     
 exports.getOne = async (req, res) =>{
-    const {id_pessoa} = req.params
+    const {id_pessoa} = req.query
     try{
-        const result = await pool.query('SELECT * FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
-        if(result.rows.length === 0)
-       res.status(400).json({Message: 'Sem dados do endereço'});
 
     } catch (error){
         console.log(error);
