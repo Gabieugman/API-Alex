@@ -1,18 +1,11 @@
 const pool = require('../config/db');
 
-formataCEP = (cep) => {
-    if(cep.length === 8){
-        return cep.slice(0, 5) + '-' + cep.slice(5);
-    }
-    return cep;
-}
-
 exports.create = async (req, res) =>{
     const {nome_pessoa, rua, bairro, cep} = req.body;
 
     try{
         const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairro, cep) VALUES ($1, $2, $3, $4) RETURNING *',
-       [nome_pessoa, rua, bairro, formataCEP(cep)]);
+       [nome_pessoa, rua, bairro, cep]);
        res.status(201).json(result.rows);
 
     } catch (error){
@@ -50,7 +43,7 @@ exports.getOne = async (req, res) =>{
     }
 
     
-    exports.update = async (req, res) => {           // Rota para atualizar os dados de um endereço 👍
+    exports.update = async (req, res) => {           
         const {id_usuario} = req.params
         const {campo, valor} = req.body
         console.log(req.body)
