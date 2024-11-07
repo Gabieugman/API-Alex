@@ -1,12 +1,5 @@
 const pool = require('../config/db');
 
-formatarCep = (cep) =>{
-    if(cep.length === 8){
-        return cep.slice(0, 5) + "-" + cep.slice(5);
-    }
-    return cep;
-}
-
 exports.create = async (req, res) =>{
     const {nome_pessoa, rua, bairro, cep} = req.body;
 
@@ -37,7 +30,6 @@ exports.getOne = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('SELECT * FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
-        res.status(201).json(result.rows[0]);
         if(result.rows.length === 0)
        res.status(400).json({Message: 'Sem dados do endereço'});
 
@@ -49,17 +41,19 @@ exports.getOne = async (req, res) =>{
 
     
 exports.update = async (req, res) =>{
-    const {id_pessoa} = req.params
-    const {nome_pessoa, rua, bairro, cep} = req.body;
-    try{
-        const result = await pool.query('UPDATE endereco nome_pessoa = $1, rua = $2, bairro = $3, cep = $4', [id_pessoa, nome_pessoa, rua, bairro, cep]);
-        if(result.rows.length === 0)
-       res.status(400).json({Message: 'Sem dados do endereço'});
+    const {id_pessoa} = req.params;
+    const {campo, valor} = req.body;
 
+    try{
+        const result = await pool.query(`UPDATE endereco SET ${campo} = $1 WHERE id = $2`, 
+            [valor, id]
+        ) 
+        res.status(201).json(result.rows[0])
+    
     } catch (error){
         console.log(error);
-        res.status(500).json({Message: 'Erro! Tente novamente'});
-       }
+        res.status(500).json({Message: "Esta pessoa n existe"})
+    }
     }
 
     
@@ -67,6 +61,7 @@ exports.delete = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
+        res.status(201).json({Message: "Usuaário deletado"});
         if(result.rows.length === 0)
        res.status(400).json({Message: 'Sem dados do endereço'});
 
