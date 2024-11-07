@@ -27,9 +27,9 @@ exports.getAll = async (req, res) =>{
 
     
 exports.getOne = async (req, res) =>{
-    const {id_pessoa} = req.query
+    const {id_pessoa} = req.body
     try{
-        const result = await pool.query(`SELECT * FROM endereco WHERE id_pessoa = ${id_pessoa}`);
+        const result = await pool.query(`SELECT id_pessoa FROM endereco WHERE id_pessoa = ${id_pessoa}`);
         res.status(201).json(result.rows)
 
         if(result.rows.length === 0){
@@ -44,14 +44,14 @@ exports.getOne = async (req, res) =>{
 
     
     exports.update = async (req, res) => {           
-        const {id_usuario} = req.params
+        const {id_pessoa} = req.params
         const {campo, valor} = req.body
         console.log(req.body)
     
         try {
             const result = await pool.query(
-                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id = $2`,
-                [valor, id_usuario]
+                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id_pessoa = $2`,
+                [valor, id_pessoa]
             )
             res.status(201).json(result.rows[0])
         } catch (error) {
