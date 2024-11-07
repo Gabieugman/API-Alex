@@ -17,5 +17,5 @@ PUT http://localhost:8080/api/enderecos/atualizar/:id_pessoa
 Content-Type: application/json
 
 ###
-DELETE http://localhost:8080/api/enderecos/deletar/:id_pessoa
+DELETE http://localhost:8080/api/enderecos/deletar/3
 Content-Type: application/json

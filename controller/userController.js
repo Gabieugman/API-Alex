@@ -29,6 +29,12 @@ exports.getAll = async (req, res) =>{
 exports.getOne = async (req, res) =>{
     const {id_pessoa} = req.query
     try{
+        const result = await pool.query(`SELECT * FROM endereco WHERE id_pessoa = ${id_pessoa}`);
+        res.status(201).json(result.rows)
+
+        if(result.rows.length === 0){
+            console.log(`Usuário inexistente`);
+        }
 
     } catch (error){
         console.log(error);
@@ -40,10 +46,11 @@ exports.getOne = async (req, res) =>{
 exports.update = async (req, res) =>{
     const {id_pessoa} = req.params;
     const {campo, valor} = req.body;
+    console.log(req.body);
 
     try{
         const result = await pool.query(`UPDATE endereco SET ${campo} = $1 WHERE id = $2`, 
-            [valor, id]
+            [valor, id_pessoa]
         ) 
         res.status(201).json(result.rows[0])
     
@@ -58,7 +65,7 @@ exports.delete = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
         const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
-        res.status(201).json({Message: "Usuaário deletado"});
+        res.status(201).json({Message: "Usuário deletado"});
         if(result.rows.length === 0)
        res.status(400).json({Message: 'Sem dados do endereço'});
 
