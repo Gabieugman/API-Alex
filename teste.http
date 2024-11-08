@@ -1,6 +1,13 @@
 POST http://localhost:8080/api/enderecos/criar
 Content-Type: application/json
 
+{
+    "nome_pessoa": "Ronaldo",
+    "rua": "Rua José Estácio",
+    "bairro": "Santa Efigênia",
+    "cep": "08556560"
+}
+
 ###
 
 GET http://localhost:8080/api/enderecos/selecionarTodos
@@ -8,7 +15,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/enderecos/selecionarUm/1
+GET http://localhost:8080/api/enderecos/selecionarUmaPessoa/4
 Content-Type: application/json
 
 ###
@@ -17,5 +24,5 @@ PUT http://localhost:8080/api/enderecos/atualizar/3
 Content-Type: application/json
 
 ###
-DELETE http://localhost:8080/api/enderecos/deletar/5
+DELETE http://localhost:8080/api/enderecos/deletar/14
 Content-Type: application/json
