@@ -50,7 +50,7 @@ exports.getOne = async (req, res) =>{
     
         try {
             const result = await pool.query(
-                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id_pessoa = $2`,
+                `UPDATE endereco Set ${campo} = $1 WHERE id_pessoa = $2`,
                 [valor, id_pessoa]
             )
             res.status(201).json(result.rows[0])
@@ -66,8 +66,15 @@ exports.delete = async (req, res) =>{
     try{
         const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
         res.status(201).json({Message: "Usuário deletado"});
-        if(result.rows.length === 0)
-       res.status(400).json({Message: 'Sem dados do endereço'});
+
+        if(result.rows.length === 0){
+       res.status(400).json({Message: 'Sem dados do endereço'})
+        };
+
+        if(id_pessoa.result === 0){
+        res.status(400).json({Message: "Usuário ja deletado"});
+
+        }
 
     } catch (error){
         console.log(error);
