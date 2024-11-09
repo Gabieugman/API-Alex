@@ -1,18 +1,11 @@
 const pool = require('../config/db');
 
-formataCEP = (cep) => {
-    if(cep.length === 8){
-        return cep.slice(0, 5) + '-' + cep.slice(5);
-    }
-    return cep;
-}
-
 exports.create = async (req, res) =>{
-    const {nome_pessoa, rua, bairro, cep} = req.body;
+    const { rua, bairro, cidade, estado} = req.body;
 
     try{
-        const result = await pool.query('INSERT INTO endereco (nome_pessoa, rua, bairro, cep) VALUES ($1, $2, $3, $4) RETURNING *',
-       [nome_pessoa, rua, bairro, formataCEP(cep)]);
+        const result = await pool.query('INSERT INTO endereco (cidade, rua, bairro, estado) VALUES ($1, $2, $3, $4) RETURNING *',
+       [cidade, estado, rua, bairro ]);
        res.status(201).json(result.rows);
 
     } catch (error){
@@ -36,7 +29,7 @@ exports.getAll = async (req, res) =>{
 exports.getOne = async (req, res) =>{
     const {id_pessoa} = req.params
     try{
-        const result = await pool.query(`SELECT * FROM endereco WHERE id_pessoa = ${id_pessoa}`);
+        const result = await pool.query(`SELECT * FROM endereco WHERE id = ${id_pessoa}`);
        return res.status(201).json(result.rows)
 
     } catch (error){
@@ -51,14 +44,14 @@ exports.getOne = async (req, res) =>{
 
     
     exports.update = async (req, res) => {           
-        const {id_pessoa} = req.params
+        const {id} = req.params
         const {campo, valor} = req.body
         console.log(req.body)
     
         try {
             const result = await pool.query(
-                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id_pessoa = $2`,
-                [valor, id_pessoa]
+                `UPDATE ENDERECOS Set ${campo} = $1 WHERE id = $2`,
+                [valor, id]
             )
            return res.status(201).json(result.rows[0])
         } catch (error) {
@@ -69,9 +62,9 @@ exports.getOne = async (req, res) =>{
 
     
 exports.delete = async (req, res) =>{
-    const {id_pessoa} = req.params
+    const {id} = req.params
     try{
-        const result = await pool.query('DELETE FROM endereco WHERE id_pessoa = $1', [id_pessoa]);
+        const result = await pool.query('DELETE FROM endereco WHERE id = $1', [id]);
        
         return res.status(201).json({Message: "Usuário deletado"});
 
